@@ -25,10 +25,10 @@ This project is derived from and inspired by many excellent examples found on th
   with the same 3.3VDC the ESP takes. I made the following modifications to the PIR sensor:
   - Removed the 3V3 voltage regulator
   - Connected the cathode (output) side of the diode to the VOUT pad where the regulator had been connected
-  - Removed the 1k resistor between the controller IC and the signal pin.
+  - Removed the 1k resistor between the controller IC and the signal pin and shorted the two pads.
   - NOTE:This permanently changes the sensor to only take 3.3V, do not power it with 5V after removing the regulator.
-    See below for instructions on making this change. If you don't want to make this mod to your sensor, you
-    can still power it with 3.3V following the guide above [4].
+    If you don't want to remove the regulator from your sensor, you can still power it with 3.3V following the guide 
+    above [4], but you may still need to remove the 1k resistor.
 
 * I've included a folder called "Hubitat Driver" that contains the Device Driver code you will need to import into
   your home automation hub. There are plenty of online resources explaining how to do that, so I'll not get into
