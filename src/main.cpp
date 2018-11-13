@@ -2,6 +2,9 @@
 #include <SmartThingsESP8266WiFi.h>
 #include <ArduinoJson.h>
 
+// Enable VCC measurement (must be at the top of the file in global scope)
+ADC_MODE(ADC_VCC);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Configuration
 ////////////////////////////////////////////////////////////////////////////////
@@ -37,8 +40,8 @@ IPAddress ip_hub(192, 168, 135, 2);
 // line noise
 #define SERIAL_SPEED 9600
 
-// Enable VCC measurement (must be at the top of the file in global scope)
-ADC_MODE(ADC_VCC);
+// Controls the minimum amount of time the motion sensor shows  "active" state
+#define MIN_ACTIVE_TIME 5000
 
 ////////////////////////////////////////////////////////////////////////////////
 // Globals
@@ -102,6 +105,7 @@ void loop()
 
     Serial.printf("Sent: %s\r\n", stringBuffer);
 
+    unsigned long startMillis = millis();
     // Simple debounce of PIR triggering... wait a bit until the pin reads low
     while (digitalRead(PIR_DATA_PIN) == 1)
     {
@@ -110,7 +114,9 @@ void loop()
     }
     firstLoop = false;
 
-    delay(2000);
+    // Ensure we waited at least MIN_ACTIVE_TIME before looping around
+    while( (millis() - startMillis) < MIN_ACTIVE_TIME )
+      delay(100);
   }
   else
   {
