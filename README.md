@@ -13,7 +13,7 @@ This project is derived from and inspired by many excellent examples found on th
   Arduino IDE instead, you will have to move some files around, install some libraries manually, etc.
   
 * Because the ESP01 requires GPIO00 and GPIO02 to be HIGH when powering up, they're not appropriate
-  for use in this scenario. To get around this, I reused RXD as a GPIO pin as described in ESP8266-01 Pin Magic [3].
+  for use as GPIO inputs. To get around this, I reused RXD as a GPIO pin as described in ESP8266-01 Pin Magic [3].
 
 * My circuit is essentally the same as the one described in [2] above, with the exception that I used RXD instead of 
   GPIO12 (which isn't broken out on the ESP-01). Also, I found that the pulldown resistor connected after the diode
