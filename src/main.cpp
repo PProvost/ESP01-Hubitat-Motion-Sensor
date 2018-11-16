@@ -16,7 +16,7 @@ ADC_MODE(ADC_VCC);
 #include "../../ap_setting.h"
 
 // Static IP address enables faster startup (== less power consumption)
-IPAddress ip_static(192, 168, 135, 98);
+IPAddress ip_static(192, 168, 135, 98); // Must match what you set in the Hubitat Device config
 IPAddress ip_gateway(192, 168, 135, 1);
 IPAddress ip_subnet(255, 255, 255, 0);
 IPAddress ip_dns(192, 168, 135, 1);
@@ -24,7 +24,7 @@ IPAddress ip_dns(192, 168, 135, 1);
 // This must be set to your Hubitat's static IP address
 IPAddress ip_hub(192, 168, 135, 2);
 
-// Must match what you set in the Hubitat Device Handler configuration
+// Must match what you set in the Hubitat Device config
 #define DEVICE_PORT 8090
 
 // NOTE: Change this to 39500 if you're using SmartThings instead of Hubitat

@@ -19,16 +19,34 @@ This project is derived from and inspired by many excellent examples found on th
 * You will also need to edit the IPAddress variables at the top of main.cpp to match your configuration. Each
   device needs to be given its own unique static IP address (faster==lower power consumption).
 
+* When setting up the device in Hubitat, you will need to provide the static IP address, device port (8090),
+  and the device MAC address. There are properties for the first two, but the MAC address must be entered into
+  the "Device Network Id" field in Hubitat. The easiest way to get the MAC address is from the serial output 
+  after you flash the device and before you install it.
+
+* I've included a folder called "Hubitat Driver" that contains the Device Driver code you will need to import into
+  your home automation hub. There are plenty of online resources explaining how to do that, so I'll not get into
+  that here.
+
 ## Building the circuit
 
 Please refer to the schematic PDF and the other files in the schematic/ folder. I'm working on a board you will be
 able to order from OSHPark, but until I have confirmed it works, you might be better off building it by hand on 
 perf or strip board.
 
+Once the board is confirmed working, I will also design a 3D printed enclosure for it.
+
 ## Implementation Notes
+
+* The circuit is designed to be powered off of one lithium ion (LiPo) battery, and uses a low
+  QI voltage regulator to provide the 3V3 expected by the ESP8266. This requires some special
+  attention with your PIR sensor. Most of the cheap ones you will find expect 5V. See below for
+  more information about modding your PIR sensor for 3V3.
 
 * Because the ESP01 requires GPIO00 and GPIO02 to be HIGH when powering up, they're not appropriate
   for use as GPIO inputs. To get around this, I reused RXD as a GPIO pin as described in ESP8266-01 Pin Magic [3].
+  This means you can't use serial commands to talk TO the device, but it can still send serial logging
+  to the serial monitor.
 
 * My circuit is essentally the same as the one described in [2] above, with the exception that I used RXD instead of 
   GPIO12 (which isn't broken out on the ESP-01). Also, I found that the pulldown resistor connected after the diode
@@ -45,7 +63,4 @@ perf or strip board.
     If you don't want to remove the regulator from your sensor, you can still power it with 3.3V following the guide 
     above [4], but you may still need to remove the 1k resistor.
 
-* I've included a folder called "Hubitat Driver" that contains the Device Driver code you will need to import into
-  your home automation hub. There are plenty of online resources explaining how to do that, so I'll not get into
-  that here.
 
