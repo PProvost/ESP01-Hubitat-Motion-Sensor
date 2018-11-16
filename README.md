@@ -7,11 +7,26 @@ This project is derived from and inspired by many excellent examples found on th
 3. http://www.forward.com.au/pfod/ESP8266/GPIOpins/ESP8266_01_pin_magic.html
 4. https://randomnerdtutorials.com/modifying-cheap-pir-motion-sensor-to-work-at-3-3v/
 
-## Implementation Notes
+## Getting started
 
 * This project was developed using Platformio and therefore uses that project structure. If you want to use the
   Arduino IDE instead, you will have to move some files around, install some libraries manually, etc.
   
+* This project will NOT build as-is! I store my local WiFi information in a separate file outside of the project
+  directory. You will need to copy src/ap_setting_h.example to the directory above the project directory. Edit
+  it to match your local WiFi settings and you should be good to go. Look at the top of main.cpp for more info.
+
+* You will also need to edit the IPAddress variables at the top of main.cpp to match your configuration. Each
+  device needs to be given its own unique static IP address (faster==lower power consumption).
+
+## Building the circuit
+
+Please refer to the schematic PDF and the other files in the schematic/ folder. I'm working on a board you will be
+able to order from OSHPark, but until I have confirmed it works, you might be better off building it by hand on 
+perf or strip board.
+
+## Implementation Notes
+
 * Because the ESP01 requires GPIO00 and GPIO02 to be HIGH when powering up, they're not appropriate
   for use as GPIO inputs. To get around this, I reused RXD as a GPIO pin as described in ESP8266-01 Pin Magic [3].
 

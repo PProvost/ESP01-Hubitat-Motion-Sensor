@@ -15,7 +15,7 @@ ADC_MODE(ADC_VCC);
 //      root of the repository showing the expected format.
 #include "../../ap_setting.h"
 
-// Static IP address enables faster startup (less power consumption)
+// Static IP address enables faster startup (== less power consumption)
 IPAddress ip_static(192, 168, 135, 98);
 IPAddress ip_gateway(192, 168, 135, 1);
 IPAddress ip_subnet(255, 255, 255, 0);
@@ -40,7 +40,7 @@ IPAddress ip_hub(192, 168, 135, 2);
 // line noise
 #define SERIAL_SPEED 9600
 
-// Controls the minimum amount of time the motion sensor shows  "active" state
+// Controls the minimum amount of time (milliseconds) the motion sensor shows  "active" state
 #define MIN_ACTIVE_TIME 5000
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -115,7 +115,7 @@ void loop()
     firstLoop = false;
 
     // Ensure we waited at least MIN_ACTIVE_TIME before looping around
-    while( (millis() - startMillis) < MIN_ACTIVE_TIME )
+    while ((millis() - startMillis) < MIN_ACTIVE_TIME)
       delay(100);
   }
   else
@@ -157,7 +157,7 @@ static float getVccPercent()
   // as 50% and 2.5V wil be reported at 0%, using linear scaling across that range.
   // Anything above 3.2% will be reported as 100%. (Note: if you are using an ESP8266
   // that has the ADC pin exposed for your use, you could get a real VBAT percentage
-  // by using a voltage divider to get it into a range the ADC can accept, and just 
+  // by using a voltage divider to get it into a range the ADC can accept, and just
   // return that value.)
   //
   // Scaling equation used:
@@ -166,12 +166,12 @@ static float getVccPercent()
   // Where [A:B] is [2.5:3.2] and [C:D] is [0.0:50.0]
 
   uint16_t x = ESP.getVcc();
-  uint16_t A=2500, B=3200;
-  float C=0.0, D=50.0;
+  uint16_t A = 2500, B = 3200;
+  float C = 0.0, D = 50.0;
   float result = 100.0;
   if (x <= B)
   {
-    result = C*(1-(x-A)/(B-A)) + D*((x-A)/(B-A));
+    result = C * (1 - (x - A) / (B - A)) + D * ((x - A) / (B - A));
   }
 
   return result;

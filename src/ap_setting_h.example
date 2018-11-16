@@ -1,0 +1,5 @@
+// Copy this file to the directory above the project, rename it to
+// app_setting.h and update the values below to match your network.
+
+#define WIFI_SSID "YOUR_WIFI_SSID"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
