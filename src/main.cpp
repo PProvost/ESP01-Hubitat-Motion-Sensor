@@ -1,6 +1,9 @@
 //#include <ESP8266WiFi.h>
 #include <SmartThingsESP8266WiFi.h>
+using HubitatClient = st::SmartThingsESP8266WiFi;
+
 #include <ArduinoJson.h>
+
 
 // Enable VCC measurement (must be at the top of the file in global scope)
 ADC_MODE(ADC_VCC);
@@ -10,9 +13,8 @@ ADC_MODE(ADC_VCC);
 ////////////////////////////////////////////////////////////////////////////////
 
 // NOTE: This file is NOT included in the git repo. You must create it and put
-// it in the correct location, or
-//      replace this line with the equivalent defines. There is a sample in the
-//      root of the repository showing the expected format.
+// it in the correct location, or replace this line with the equivalent defines.
+// A sample file is provided in the file src/ap_setting_h.example.
 #include "../../ap_setting.h"
 
 // Static IP address enables faster startup (== less power consumption)
@@ -56,7 +58,7 @@ bool firstLoop = true;
 
 // Local WiFi constants are defined in ap_setting.h, the others are defined
 // above
-st::SmartThingsESP8266WiFi smartthing(WIFI_SSID, WIFI_PASSWORD, ip_static,
+HubitatClient hubClient(WIFI_SSID, WIFI_PASSWORD, ip_static,
                                       ip_gateway, ip_subnet, ip_dns,
                                       DEVICE_PORT, ip_hub, HUBITAT_PORT,
                                       messageCallout);
@@ -81,7 +83,7 @@ void setup()
   Serial.begin(SERIAL_SPEED, SERIAL_8N1, SERIAL_TX_ONLY);
 
   // Setup WiFi and hub connection
-  smartthing.init();
+  hubClient.init();
   yield();
 }
 
@@ -99,8 +101,8 @@ void loop()
     root["battery"] = vcc;
     root.printTo(stringBuffer);
 
-    smartthing.send(stringBuffer);
-    smartthing.run();
+    hubClient.send(stringBuffer);
+    hubClient.run();
     yield();
 
     Serial.printf("Sent: %s\r\n", stringBuffer);
@@ -123,8 +125,8 @@ void loop()
     root["motion"] = "inactive";
     root["battery"] = vcc;
     root.printTo(stringBuffer);
-    smartthing.send(stringBuffer);
-    smartthing.run();
+    hubClient.send(stringBuffer);
+    hubClient.run();
     yield();
 
     Serial.printf("Sent: %s\r\n", stringBuffer);
